@@ -1,0 +1,33 @@
+{
+  "name": "hmijs",
+  "version": "0.0.0",
+  "description": "HMI based on JavaScript",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Markus Hardardt",
+  "license": "ISC",
+  "dependencies": {
+    "base-64": "^0.1.0",
+    "body-parser": "^1.18.3",
+    "codemirror": "^5.44.0",
+    "datatables": "^1.10.18",
+    "datatables.net-scroller": "^1.5.1",
+    "express": "^4.16.4",
+    "file-saver": "^2.0.1",
+    "http-errors": "^1.7.2",
+    "jquery": "^3.3.1",
+    "jquery-ui-dist": "^1.12.1",
+    "jquery.fancytree": "^2.30.2",
+    "js-beautify": "^1.9.0",
+    "md5": "^2.2.1",
+    "mysql": "^2.16.0",
+    "node-ads": "^1.4.13",
+    "path": "^0.12.7",
+    "request": "^2.88.0",
+    "ws": "^6.2.0",
+    "xmlhttprequest": "^1.8.0"
+  },
+  "devDependencies": {}
+}

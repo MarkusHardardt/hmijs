@@ -1,0 +1,24 @@
+{
+  "production": false,
+  "static_client_files": [],
+  "scrollbar_config": "./cfg/ui/scrollbar-desktop.css",
+  "scrollbar_hmi": "./cfg/ui/scrollbar-touch.css",
+  "touch": false,
+  "cms_roots": "TODO: edit cms link to roots array [{url:'...',id:'$path/file.ext'},...]",
+  "jsonfx_pretty": true,
+  "web_socket_port": 4455,
+  "server": {
+    "cycle_millis": 250,
+    "test_enabled": false,
+    "web_server_port": 8080,
+    "_ads": "./src/ads/_debug_ads_config_CX2020_TC2.json",
+    "__ads": "./src/ads/_debug_ads_config_CX2020_TC3.json"
+  },
+  "client": {
+    "raf_cycle": 3,
+    "test_enabled": false,
+    "test_with_sql_proxy": false,
+    "minimized": false,
+    "cms_with_sql_proxy": false
+  }
+}
