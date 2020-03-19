@@ -643,7 +643,7 @@
             }
             else {
               // no real object means just return whatever it is
-              i_success(includedObject);
+              i_success(i_includedObject);
             }
           }, i_error);
         }
