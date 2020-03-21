@@ -41,3 +41,15 @@ The follwing objects types are supported:
 Note:
 All types of data will be stored in a separate table inside your data base.
 Therefore the database configuration must correspond to your configuration parameters in 'cfg/db_config.json'.
+This file also containes the available languages which must correspond to the column names of the LABEL and HTML table.
+
+
+So what ist the plan for the future?
+The idea for 'hmijs' is to use it as an HMI content management system.
+Therefore we need access to some control system and the plan is to talk to a Beckhoff PLC using ADS.
+There is a npm package available we could probably use called 'node-ads'.
+So the roadmap could be:
+- Develop server side data handler connecting to PLC using ADS
+- Add feature for subscribing and unsubscribing multiple observers for PLC variables (handling the requirement of actually listening via ADS to some variable or not depending on the existence of observers)
+- Add websocket and instantiation for each client
+- Add client side proxy for data handler with same interface as on server side to enable same features as on server
