@@ -2958,17 +2958,17 @@
     this.hmi_setRootPath = function(i_path, i_success, i_error) {
       // this call returns a promise and by calling "then" on the promise we
       // catch success or error
-      _cont.fancytree('getTree').reload({
-          url : that.rootURL,
-          cache : false,
-          data : {
-              path : i_path,
-              request : that.rootRequest
-          }
+      $.ui.fancytree.getTree(_cont).reload({
+        url : that.rootURL,
+        cache : false,
+        data : {
+            path : i_path,
+            request : that.rootRequest
+        }
       }).then(i_success, i_error);
     };
     this.hmi_getRootNode = function() {
-      return _cont.fancytree('getRootNode');
+      return $.ui.fancytree.getTree(_cont).getRootNode();
     };
     var _setEnabled = this.hmi_setEnabled;
     this.hmi_setEnabled = function(i_enabled) {
@@ -2978,7 +2978,7 @@
       _cont.fancytree(i_enabled === true ? 'enable' : 'disable');
     };
     this.hmi_updateLoadedNodes = function(i_success, i_error) {
-      var root = _cont.fancytree('getRootNode');
+      var root = that.hmi_getRootNode();
       update_loaded_tree_nodes(that.rootURL, that.rootRequest, root, that.compareNodes, i_success || function() {
         // nothing to do
       }, i_error || function(i_exception) {
@@ -2986,7 +2986,7 @@
       });
     };
     this.hmi_setActivePath = function(i_path, i_success, i_error) {
-      var root = _cont.fancytree('getRootNode');
+      var root = that.hmi_getRootNode();
       expand_tree_path(that.rootURL, that.rootRequest, root, i_path, that.compareNodes, function(i_node) {
         i_node.makeVisible({
           scrollIntoView : true
