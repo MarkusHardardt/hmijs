@@ -14,6 +14,9 @@
   var SqlHelper = require('./src/util/SqlHelper.js');
   var ContentManager = require('./src/cms/ContentManager.js');
   var WebServer = require('./src/util/WebServer.js');
+  var AdsAdapter = require('./src/ads/ads_adapter.js');
+  //  var DataHandler = require('./src/util/DataHandler.js');
+
 
   // here we store our init tasks
   var tasks = [];
@@ -131,6 +134,85 @@
       i_response.send(jsonfx.stringify(i_exception.toString(), false));
     });
   });
+  // ADS
+  var adsAdapter = false, dataHandler = false, dataHandlerObject = false;
+  if (main_config.server.ads) {
+    tasks.push(function (i_success, i_error) {
+      var nodeAds = require('node-ads');
+      var cfg = require(main_config.server.ads);
+      cfg.amsPortSource = 32906;
+      adsAdapter = new AdsAdapter(nodeAds, cfg);
+      adsAdapter.init(function () {
+        console.log('connected via ads to: ' + JSON.stringify(cfg, undefined, 2));
+        //dataHandler = new DataHandler(adsAdapter);
+        /*
+        dataHandlerObject = {
+          type: 'handler',
+          prepare: function (that, i_success, i_error) {
+            console.log('handler prepare');
+            i_success();
+          },
+          refresh: function (i_date) {
+            dataHandler.refresh(i_date);
+          },
+          destroy: function (that, i_success, i_error) {
+            console.log('handler destroy');
+            i_success();
+          }
+        };*/
+        //hmi.create(dataHandlerObject);
+        // TODO remove next line
+        //console.log(JSON.stringify(adsAdapter._roots, undefined, 2));
+        if (false) {
+          webServer.get(AdsAdapter.GET_TREE_NODES_URL, function (i_request, i_response) {
+            adsAdapter.handleFancyTreeRequest(i_request.query.request, i_request.query.path, function (i_result) {
+              i_response.send(jsonfx.stringify(i_result, false));
+            }, function (i_exception) {
+              i_response.send(jsonfx.stringify(i_exception.toString(), false));
+            });
+          });
+        }
+        if (false) {
+          webServer.post('/read_ads_variable', function (i_request, i_response) {
+            adsAdapter.read([i_request.body.path], function (i_result) {
+              i_response.send(jsonfx.stringify(i_result, false));
+            }, function (i_exception) {
+              i_response.send(jsonfx.stringify(i_exception.toString(), false));
+            });
+          });
+        }
+        if (false) {
+          var WebSocket = require('ws');
+          var webSocketServer = new WebSocket.Server({
+            port: 1234
+          });
+          webSocketServer.on('connection', function connection(i_socket) {
+            console.log('Verbindung von Client');
+            i_socket.on('message', function (i_data) {
+              console.log("Neue Nachricht: " + i_data);
+              i_socket.send('Hello client');
+              console.log("Beantworted:");
+              setTimeout(function () {
+                i_socket.send('shutdown');
+                console.log("Send shutdown to client");
+              }, 1000);
+            });
+            i_socket.on('close', function () {
+              console.log("Client beendet Verbindung");
+            });
+          });
+          adsAdapter.read(['GENERALCOMMANDS.I_HMI_QC_HEARTBEAT', 'MACHMANUALMODE.I_HEARTBEAT'], function (i_result) {
+            console.log(JSON.stringify(i_result, undefined, 2));
+          }, function (i_exception) {
+            console.error(i_exception.toString());
+          });
+        }
+        i_success();
+      }, i_error);
+    });
+  }
+
+
   // build document
   var document_body = '';
   if (main_config.client.cms_with_sql_proxy || (main_config.client.test_enabled && main_config.client.test_with_sql_proxy)) {

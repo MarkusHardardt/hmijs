@@ -1,0 +1,6 @@
+{
+    "amsNetIdSource": "192.168.1.99.1.1",
+    "amsNetIdTarget": "192.168.7.114.1.1",
+    "host": "192.168.2.100",
+    "amsPortTarget": 851
+}

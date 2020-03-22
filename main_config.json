@@ -11,8 +11,7 @@
     "cycle_millis": 250,
     "test_enabled": false,
     "web_server_port": 8080,
-    "_ads": "./src/ads/_debug_ads_config_CX2020_TC2.json",
-    "__ads": "./src/ads/_debug_ads_config_CX2020_TC3.json"
+    "ads": "./cfg/ads_config.json"
   },
   "client": {
     "raf_cycle": 3,
