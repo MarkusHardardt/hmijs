@@ -476,7 +476,7 @@
     }
     var that = this;
     this._getSqlAdapter(function(i_adapter) {
-      var key = match[1], parse = i_mode === ContentManager.PARSE, incl = parse || i_mode === ContentManager.INCLUDE;
+      var key = match[1], parse = i_mode === ContentManager.PARSE, include = parse || i_mode === ContentManager.INCLUDE;
       var success = function(i_object) {
         i_adapter.close();
         try {
@@ -509,7 +509,7 @@
         that._getRawString(i_adapter, table, key, undefined, function(i_rawString) {
           if (i_rawString !== false) {
             var object = table.jsonfx ? jsonfx.parse(i_rawString, false, false) : i_rawString;
-            if (incl) {
+            if (include) {
               var ids = {};
               ids[i_id] = true;
               that._include(i_adapter, object, ids, i_language, success, error);
@@ -528,7 +528,7 @@
         // includes included
         that._getRawString(i_adapter, table, key, i_language, function(i_rawString) {
           if (i_rawString !== false) {
-            if (incl) {
+            if (include) {
               var ids = {};
               ids[i_id] = true;
               that._include(i_adapter, i_rawString, ids, i_language, success, error);
@@ -553,7 +553,7 @@
         i_adapter.performSelect(table.name, undefined, undefined, 1, function(i_results, i_fields) {
           if (i_results.length === 1) {
             var object = i_results[0];
-            if (incl) {
+            if (include) {
               var tasks = [];
               for ( var attr in object) {
                 if (object.hasOwnProperty(attr)) {
