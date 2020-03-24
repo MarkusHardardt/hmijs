@@ -331,7 +331,7 @@
   ContentManager.MOVE = 'move';
   ContentManager.NONE = 'none';
   ContentManager.RAW = 'raw';
-  ContentManager.BUILD = 'build';
+  ContentManager.INCLUDE = 'include';
   ContentManager.PARSE = 'parse';
   ContentManager.GET_CONTENT_DATA_URL = '/get_content_data';
   ContentManager.GET_CONTENT_TREE_NODES_URL = '/get_content_tree_nodes';
@@ -476,7 +476,7 @@
     }
     var that = this;
     this._getSqlAdapter(function(i_adapter) {
-      var key = match[1], parse = i_mode === ContentManager.PARSE, incl = parse || i_mode === ContentManager.BUILD;
+      var key = match[1], parse = i_mode === ContentManager.PARSE, incl = parse || i_mode === ContentManager.INCLUDE;
       var success = function(i_object) {
         i_adapter.close();
         try {
@@ -512,7 +512,7 @@
             if (incl) {
               var ids = {};
               ids[i_id] = true;
-              that._build(i_adapter, object, ids, i_language, success, error);
+              that._include(i_adapter, object, ids, i_language, success, error);
             }
             else {
               success(object);
@@ -531,7 +531,7 @@
             if (incl) {
               var ids = {};
               ids[i_id] = true;
-              that._build(i_adapter, i_rawString, ids, i_language, success, error);
+              that._include(i_adapter, i_rawString, ids, i_language, success, error);
             }
             else {
               success(i_rawString);
@@ -562,7 +562,7 @@
                     var ids = {};
                     ids[i_id] = true;
                     tasks.push(function(i_suc, i_err) {
-                      that._build(i_adapter, object[language], ids, language, function(i_object) {
+                      that._include(i_adapter, object[language], ids, language, function(i_object) {
                         object[language] = i_object;
                         i_suc();
                       }, i_err);
@@ -587,7 +587,7 @@
     }, i_error);
   };
 
-  ContentManager.prototype._build = function(i_adapter, i_object, i_ids, i_language, i_success, i_error) {
+  ContentManager.prototype._include = function(i_adapter, i_object, i_ids, i_language, i_success, i_error) {
     var that = this, config = this._config;
     if (Array.isArray(i_object)) {
       this._buildProperties(i_adapter, i_object, i_ids, i_language, i_success, i_error);
@@ -609,7 +609,7 @@
         if (i_rawString !== false) {
           i_ids[includeKey] = true;
           var includedObject = table.jsonfx ? jsonfx.parse(i_rawString, false, false) : i_rawString;
-          that._build(i_adapter, includedObject, i_ids, i_language, function(i_includedObject) {
+          that._include(i_adapter, includedObject, i_ids, i_language, function(i_includedObject) {
             delete i_ids[includeKey];
             if (typeof i_includedObject === 'object' && i_includedObject !== null) {
               // if we included an object all attributes except
@@ -678,7 +678,7 @@
                   if (i_rawString !== false) {
                     i_ids[includeKey] = true;
                     var object = table.jsonfx ? jsonfx.parse(i_rawString, false, false) : i_rawString;
-                    that._build(i_adapter, object, i_ids, i_language, function(i_build) {
+                    that._include(i_adapter, object, i_ids, i_language, function(i_build) {
                       delete i_ids[includeKey];
                       array[idx] = table.jsonfx && array.length > 1 ? jsonfx.stringify(i_build, false) : i_build;
                       i_suc();
@@ -717,7 +717,7 @@
         (function() {
           var p = a;
           tasks.push(function(i_suc, i_err) {
-            that._build(i_adapter, i_object[p], i_ids, i_language, function(i_objectProperty) {
+            that._include(i_adapter, i_object[p], i_ids, i_language, function(i_objectProperty) {
               i_object[p] = i_objectProperty;
               i_suc();
             }, i_err);
@@ -2260,7 +2260,7 @@
         command : COMMAND_GET_OBJECT,
         id : i_id,
         language : i_language,
-        mode : parse ? ContentManager.BUILD : i_mode
+        mode : parse ? ContentManager.INCLUDE : i_mode
     }, parse ? function(i_response) {
       if (i_response !== undefined) {
         try {

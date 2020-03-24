@@ -369,7 +369,7 @@
     });
     i_handler.addTest(function(i_passed, i_failed) {
       i_handler.setMessagePrefix('ContentManager:build_objects_include');
-      check_get_objects(handler, references, SOURCE, handler.getLanguages(), ContentManager.BUILD, i_passed, i_failed);
+      check_get_objects(handler, references, SOURCE, handler.getLanguages(), ContentManager.INCLUDE, i_passed, i_failed);
     });
     // move root
     i_handler.addTest(function(i_passed, i_failed) {
@@ -461,7 +461,7 @@
     // get all languages of label with includes
     i_handler.addTest(function(i_passed, i_failed) {
       i_handler.setMessagePrefix('ContentManager:multilanguage_included');
-      handler.getObject(SOURCE + 'm3/data.l', undefined, ContentManager.BUILD, function(i_result) {
+      handler.getObject(SOURCE + 'm3/data.l', undefined, ContentManager.INCLUDE, function(i_result) {
         i_passed('child nodes: ' + jsonfx.stringify(i_result, true));
       }, function(i_exc) {
         i_failed('EXCEPTION: ' + JSON.stringify(i_exc));

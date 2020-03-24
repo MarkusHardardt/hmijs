@@ -1002,7 +1002,7 @@
     var cms = i_hmi.cms, langs = i_hmi.cms.getLanguages(), children = [], rows = [], values = {};
     var reload = function(i_data, i_language, i_success, i_error) {
       if (i_data && i_data.file) {
-        cms.getObject(i_data.file, undefined, ContentManager.BUILD, function(i_build) {
+        cms.getObject(i_data.file, undefined, ContentManager.INCLUDE, function(i_build) {
           if (i_build !== undefined) {
             for (var i = 0, l = langs.length; i < l; i++) {
               var lang = langs[i], lab = i_build[lang];
@@ -1148,8 +1148,8 @@
   var get_htm_preview = function(i_hmi, i_adapter) {
     var mode = ContentManager.RAW, update_mode = function(i_mode) {
       mode = i_mode;
-      button_build.selected = i_mode === ContentManager.BUILD;
-      button_build.hmi_setSelected(button_build.selected);
+      button_include.selected = i_mode === ContentManager.INCLUDE;
+      button_include.hmi_setSelected(button_include.selected);
       button_raw.selected = i_mode === ContentManager.RAW;
       button_raw.hmi_setSelected(button_raw.selected);
       i_adapter.triggerReload();
@@ -1166,8 +1166,8 @@
             i_error(i_exception);
           });
           break;
-        case ContentManager.BUILD:
-          i_hmi.cms.getObject(i_data.file, i_language, ContentManager.BUILD, function(i_build) {
+        case ContentManager.INCLUDE:
+          i_hmi.cms.getObject(i_data.file, i_language, ContentManager.INCLUDE, function(i_build) {
             preview.hmi_html(i_build !== undefined ? i_build : '');
             i_success();
           }, function(i_exception) {
@@ -1195,13 +1195,13 @@
         y : 1,
         align : 'left'
     };
-    var button_build = {
+    var button_include = {
         x : 1,
         y : 1,
-        text : 'build',
+        text : 'include',
         border : true,
         clicked : function() {
-          update_mode(ContentManager.BUILD);
+          update_mode(ContentManager.INCLUDE);
         }
     };
     var button_raw = {
@@ -1218,17 +1218,17 @@
         type : 'grid',
         columns : [ 1, DEFAULT_COLUMN_WIDTH, DEFAULT_COLUMN_WIDTH ],
         rows : [ 1, DEFAULT_ROW_HEIGHT ],
-        children : [ preview, info_lang, button_build, button_raw ],
+        children : [ preview, info_lang, button_include, button_raw ],
         keyChanged : function(i_data, i_language, i_success, i_error) {
           info_lang.hmi_text('language: "' + i_language + '"');
-          button_build.hmi_setEnabled(false);
+          button_include.hmi_setEnabled(false);
           button_raw.hmi_setEnabled(false);
           reload(i_data, i_language, function() {
-            button_build.hmi_setEnabled(true);
+            button_include.hmi_setEnabled(true);
             button_raw.hmi_setEnabled(true);
             i_success();
           }, function(i_exception) {
-            button_build.hmi_setEnabled(true);
+            button_include.hmi_setEnabled(true);
             button_raw.hmi_setEnabled(true);
             i_error(i_exception);
           });
@@ -1304,8 +1304,8 @@
   var get_txt_preview = function(i_hmi, i_adapter) {
     var cms = i_hmi.cms, mode = ContentManager.RAW, scrolls_raw = {}, scrolls_build = {}, update_mode = function(i_mode) {
       mode = i_mode;
-      button_build.selected = i_mode === ContentManager.BUILD;
-      button_build.hmi_setSelected(button_build.selected);
+      button_include.selected = i_mode === ContentManager.INCLUDE;
+      button_include.hmi_setSelected(button_include.selected);
       button_raw.selected = i_mode === ContentManager.RAW;
       button_raw.hmi_setSelected(button_raw.selected);
       i_adapter.triggerReload();
@@ -1334,8 +1334,8 @@
             i_error(i_exception);
           });
           break;
-        case ContentManager.BUILD:
-          cms.getObject(i_data.file, i_language, ContentManager.BUILD, function(i_build) {
+        case ContentManager.INCLUDE:
+          cms.getObject(i_data.file, i_language, ContentManager.INCLUDE, function(i_build) {
             textarea.hmi_value(i_build !== undefined ? i_build : '');
             if (i_build !== undefined) {
               textarea.file_build = i_data.file;
@@ -1368,13 +1368,13 @@
         y : 1,
         align : 'left'
     };
-    var button_build = {
+    var button_include = {
         x : 1,
         y : 1,
-        text : 'build',
+        text : 'include',
         border : true,
         clicked : function() {
-          update_mode(ContentManager.BUILD);
+          update_mode(ContentManager.INCLUDE);
         }
     };
     var button_raw = {
@@ -1391,17 +1391,17 @@
         type : 'grid',
         columns : [ 1, DEFAULT_COLUMN_WIDTH, DEFAULT_COLUMN_WIDTH ],
         rows : [ 1, DEFAULT_ROW_HEIGHT ],
-        children : [ textarea, info_lang, button_build, button_raw ],
+        children : [ textarea, info_lang, button_include, button_raw ],
         keyChanged : function(i_data, i_language, i_success, i_error) {
           info_lang.hmi_text('language: "' + i_language + '"');
-          button_build.hmi_setEnabled(false);
+          button_include.hmi_setEnabled(false);
           button_raw.hmi_setEnabled(false);
           reload(i_data, i_language, function() {
-            button_build.hmi_setEnabled(true);
+            button_include.hmi_setEnabled(true);
             button_raw.hmi_setEnabled(true);
             i_success();
           }, function(i_exception) {
-            button_build.hmi_setEnabled(true);
+            button_include.hmi_setEnabled(true);
             button_raw.hmi_setEnabled(true);
             i_error(i_exception);
           });
@@ -1480,8 +1480,8 @@
       mode = i_mode;
       button_hmi.selected = i_mode === ContentManager.PARSE;
       button_hmi.hmi_setSelected(button_hmi.selected);
-      button_build.selected = i_mode === ContentManager.BUILD;
-      button_build.hmi_setSelected(button_build.selected);
+      button_include.selected = i_mode === ContentManager.INCLUDE;
+      button_include.hmi_setSelected(button_include.selected);
       button_raw.selected = i_mode === ContentManager.RAW;
       button_raw.hmi_setSelected(button_raw.selected);
       i_adapter.triggerReload();
@@ -1512,9 +1512,9 @@
             }, i_error);
           }, i_error);
           break;
-        case ContentManager.BUILD:
+        case ContentManager.INCLUDE:
           container.hmi_removeContent(function() {
-            cms.getObject(i_data.file, i_language, ContentManager.BUILD, function(i_build) {
+            cms.getObject(i_data.file, i_language, ContentManager.INCLUDE, function(i_build) {
               var value = i_build !== undefined ? jsonfx.stringify(jsonfx.reconstruct(i_build), true) : '';
               textarea.value = value;
               container.hmi_setContent(textarea, function() {
@@ -1582,13 +1582,13 @@
           update_mode(ContentManager.PARSE);
         }
     };
-    var button_build = {
+    var button_include = {
         x : 2,
         y : 1,
-        text : 'build',
+        text : 'include',
         border : true,
         clicked : function() {
-          update_mode(ContentManager.BUILD);
+          update_mode(ContentManager.INCLUDE);
         }
     };
     var button_raw = {
@@ -1605,20 +1605,20 @@
         type : 'grid',
         columns : [ 1, DEFAULT_COLUMN_WIDTH, DEFAULT_COLUMN_WIDTH, DEFAULT_COLUMN_WIDTH ],
         rows : [ 1, DEFAULT_ROW_HEIGHT ],
-        children : [ container, info_lang, button_hmi, button_build, button_raw ],
+        children : [ container, info_lang, button_hmi, button_include, button_raw ],
         keyChanged : function(i_data, i_language, i_success, i_error) {
           info_lang.hmi_text('language: "' + i_language + '"');
           button_hmi.hmi_setEnabled(false);
-          button_build.hmi_setEnabled(false);
+          button_include.hmi_setEnabled(false);
           button_raw.hmi_setEnabled(false);
           reload(i_data, i_language, function() {
             button_hmi.hmi_setEnabled(true);
-            button_build.hmi_setEnabled(true);
+            button_include.hmi_setEnabled(true);
             button_raw.hmi_setEnabled(true);
             i_success();
           }, function(i_exception) {
             button_hmi.hmi_setEnabled(true);
-            button_build.hmi_setEnabled(true);
+            button_include.hmi_setEnabled(true);
             button_raw.hmi_setEnabled(true);
             i_error(i_exception);
           });
