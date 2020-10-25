@@ -1,0 +1,8 @@
+TODO#001: implement ADS-write [client->server:AJAX; ADS-write;success/error]
+TODO#002: implement ADS-read [client->server:AJAX; ADS-read;success(result)/error]
+TODO#003: implement ADS-listen [server->client:WS; ADS-subscribe;push(result)]
+TODO#004: implement "alive" or if stabe use WS-mechanism
+TODO#005: implement data handle with groups and variable ids like: "plc01:m05.prepareRunningMode.execute"
+TODO#006: implement ADS-summcommand usage for read/write
+TODO#007: implement background service objects on server contained in config-db
+TODO#008: implement AJAX responders on server contained in config-db
