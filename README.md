@@ -1,6 +1,6 @@
 # hmijs
 To try out what this is all about:
-- Open console inside hmijs root directory an run 'node update' (installs all required packages).
+- Open console inside hmijs root directory an run 'npm install' (installs all required packages) or 'node update' (for just updating already installed packages).
 - Install an SQL database if not already available ('mariadb' is recommended).
 - Insert demo data by executing 'demo/hmijs_cfg.sql' (drops database and tables if already exists; creates new database and tables; inserts some demo data;).
 - Add rights for SELECT, INSERT, UPDATE and DELETE to your database and corresponding to that edit user and password in 'cfg/db_access.json'.

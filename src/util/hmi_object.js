@@ -3000,20 +3000,22 @@
         console.error(i_exception);
       });
     };
+    // build tree source
+    var source = Array.isArray(that.data) ? that.data : {
+      url : that.rootURL,
+      cache : false,
+      data : {
+          path : '',
+          request : that.rootRequest
+      }
+    };
     // initialize tree
     _cont.fancytree({
         autoScroll : true,
         // selectMode: 2, // multi-select
         scrollParent : _cont,
         // this will be used for loading root nodes
-        source : {
-            url : that.rootURL,
-            cache : false,
-            data : {
-                path : '',
-                request : that.rootRequest
-            }
-        },
+        source : source,
         lazyLoad : function(i_event, i_data) {
           // this will be called on node expansion and used for child loading
           i_data.result = {
