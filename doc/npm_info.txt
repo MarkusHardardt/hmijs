@@ -1,0 +1,68 @@
+npm manages downloads of dependencies of your project
+
+
+Installing all dependencies
+If a project has a packages.json file, by running
+npm install
+it will install everything the project needs, in the node_modules folder, creating it if it’s not existing already.
+
+
+Installing a single package
+You can also install a specific package by running
+npm install <package-name>
+Often you’ll see more flags added to this command:
+--save installs and adds the entry to the package.json file dependencies (default as of npm 5)
+--save-dev installs and adds the entry to the package.json file devDependencies
+The difference is mainly that devDependencies are usually development tools, like a testing library, while dependencies are bundled with the app in production.
+
+
+Updating packages
+Updating is also made easy, by running
+npm update
+npm will check all packages for a newer version that satisfies your versioning constraints.
+You can specify a single package to update as well:
+npm update <package-name>
+
+
+Versioning
+In addition to plain downloads, npm also manages versioning, so you can specify any specific version of a package, or require a version higher or lower than what you need.
+Many times you’ll find that a library is only compatible with a major release of another library.
+Or a bug in the latest release of a lib, still unfixed, is causing an issue.
+Specifying an explicit version of a library also helps to keep everyone on the same exact version of a package, so that the whole team runs the same version until the package.json file is updated.
+In all those cases, versioning helps a lot, and npm follows the semantic versioning (semver) standard.
+
+
+npm root -g
+The npm root -g command will tell you where that exact location is on your machine.
+
+
+
+I suggest the default is to not commit the node_modules folder, and instead add it to your .gitignore file.
+
+
+INFO:
+
+npm install <module>
+The above command will install the <module> module into /node_modules in the current directory. Whenever you install a module from npm, it will be installed into the node_modules folder.
+
+npm install <module> --save # Where <module> is the name of the module you want to install
+When you're running npm install to install a module, you can add the optional flag --save to the command. This flag will add the module as a dependency of your project to the project's package.json as an entry in dependencies. 
+
+npm install <module> --save-dev # Where <module> is the name of the module you want to install
+There's a flag that is nearly an exact duplicate, in terms of functionality, of the --save flag when installing a module: --save-dev. There are a few a key differences between the two - instead of saving the module being installed and added to package.json as an entry in dependencies, it will save it as an entry in the devDependencies. 
+
+npm install <module> --global # Where <module> is the name of the module you want to install globally
+The final, and most common, flag for npm install that you should are the flags to install a module globally on your system.
+Global modules can be extremely useful - there are tons tools, utilities, and more for both development and general usage that you can install globally to use.
+To install a module from npm globally, you'll simply need to use the --global flag when running the install command to have the module install globally, rather than locally (to the current directory).
+
+This gives us information about our install. For now it’s important to get the current global location
+npm config get prefix
+
+npm config set prefix=C:/Program Files/nodejs/node_modules
+
+
+MAKE NPM PACKAGE / MODULE:
+https://docs.npmjs.com/creating-node-js-modules
+https://docs.npmjs.com/about-packages-and-modules
+https://docs.npmjs.com/creating-a-package-json-file
