@@ -1,0 +1,7 @@
+- install nodejs (npm included)
+- open command shell in root folder 'hmijs' and enter 'npm install' 
+- install mariadb
+- add user to mariadb (using heidi swl) according to: ../cfg/db_access.json
+- execute '../demo/hmijs_cfg.sql' with mariadb
+- run 'main.js'
+- open browser url: 'http://localhost:8080/'
