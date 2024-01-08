@@ -5266,6 +5266,7 @@
         get_alignment(that.align, _p, mx !== (that.flipX === true), my !== (that.flipY === true));
         var x = ox - _p.x * w;
         var y = oy - _p.y * h;
+        _ctx.globalAlpha = typeof that.alpha === 'number' ? Math.max(Math.min(that.alpha, 1.0), 0.0) : 1.0; // 0 == transparent .. 1 == full
         _ctx.drawImage(img, x, y, w, h);
         break;
       default:
